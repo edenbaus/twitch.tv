@@ -21,10 +21,6 @@ from bs4 import BeautifulSoup
 # BigQuery Pandas
 from pandas.io import gbq
 
-# plotly plotting libraries
-from plotly.offline import init_notebook_mode, plot, iplot
-from plotly.graph_objs import *
-init_notebook_mode(connected=True)
 
 # virtual display libraries for headless scraping
 from pyvirtualdisplay import Display
@@ -94,8 +90,8 @@ def scrape_batch():
     results_df['views'] = results_df['views'].astype(int)
     results_df = results_df.sort_values(by=['views'],ascending=[0])
     results_df['batch'] = scrape_time
-    print "Inserting results to BigQuery
-    gbq.to_gbq(df,'twitch.scrape','edenbaus'if_exists='append')
+    print "Inserting results to BigQuery"
+    gbq.to_gbq(results_df,'twitch.scrape','edenbaus',if_exists='append')
     
 def main():
     scrape_batch()
